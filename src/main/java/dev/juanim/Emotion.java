@@ -9,5 +9,15 @@ public enum Emotion {
     ENVY("Envidia"),
     EMBARRASSMENT("Vergüenza"),
     BOREDOM("Aburrimiento"),
-    NOSTALGIA("Nostalgia"),
+    NOSTALGIA("Nostalgia");
+
+    private final String displayName;
+
+    Emotion(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 }
