@@ -1,9 +1,13 @@
-package dev.juanim;
+package dev.juanim.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+
+import dev.juanim.contracts.MomentRepository;
+
+import dev.juanim.models.Moment;
 
 public class InMemoryMomentRepository implements MomentRepository {
     

@@ -6,6 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import dev.juanim.models.Moment;
+
+import dev.juanim.models.Emotion;
+
 import java.time.LocalDate;    
 
 public class MomentTest {

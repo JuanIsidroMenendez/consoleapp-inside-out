@@ -11,6 +11,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import dev.juanim.repositories.InMemoryMomentRepository;
+
+import dev.juanim.models.Moment;
+import dev.juanim.models.Emotion;
+
 class InMemoryMomentRepositoryTest {
 
     private InMemoryMomentRepository repository;

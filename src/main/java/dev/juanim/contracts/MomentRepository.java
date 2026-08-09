@@ -1,6 +1,8 @@
-package dev.juanim;
+package dev.juanim.contracts;
 
 import java.util.List;
+
+import dev.juanim.models.Moment;
 
 public interface MomentRepository {
     

@@ -1,4 +1,4 @@
-package dev.juanim;
+package dev.juanim.models;
 
 public enum Emotion {
     JOY("Alegría"),
