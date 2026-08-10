@@ -43,4 +43,11 @@ class MomentServiceTest {
         assertEquals(Emotion.SADNESS, moment.getEmotion());
         assertEquals(LocalDate.of(2026, 7, 26), moment.getMomentDate());
     }
+    @Test
+    @DisplayName("Añadir un momento provoca un incremento de uno en el número de momentos almacenados")
+    void addingMomentIncreasesCount() {
+    int before = service.getAllMoments().size();
+    service.addMoment("Título", "Descripción", Emotion.JOY, LocalDate.of(2024, 1, 1));
+    assertEquals(before + 1, service.getAllMoments().size());
+}
 }
