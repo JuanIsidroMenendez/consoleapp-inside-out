@@ -1,7 +1,9 @@
 package dev.juanim.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 
@@ -43,11 +45,31 @@ class MomentServiceTest {
         assertEquals(Emotion.SADNESS, moment.getEmotion());
         assertEquals(LocalDate.of(2026, 7, 26), moment.getMomentDate());
     }
+
     @Test
     @DisplayName("Añadir un momento provoca un incremento de uno en el número de momentos almacenados")
     void addingMomentIncreasesCount() {
     int before = service.getAllMoments().size();
-    service.addMoment("Título", "Descripción", Emotion.JOY, LocalDate.of(2024, 1, 1));
-    assertEquals(before + 1, service.getAllMoments().size());
+        service.addMoment("Título", "Descripción", Emotion.JOY, LocalDate.of(2024, 1, 1));
+
+        assertEquals(before + 1, service.getAllMoments().size());
+    }
+
+    @Test
+    @DisplayName("Eliminar un momento existente lo suprime y devuelve true")
+    void deletingExistingMomentReturnsTrue() {
+        Moment moment = service.addMoment("Título", "Descripción", Emotion.JOY, LocalDate.of(2024, 1, 1));
+
+        assertTrue(service.deleteMoment(moment.getId()));
+        assertEquals(0, service.getAllMoments().size());
+    }
+
+    @Test
+    @DisplayName("Eliminar un id inexistente devuelve false y no altera la lista")
+    void deletingNonExistentIdReturnsFalse() {
+        service.addMoment("Título", "Descripción", Emotion.JOY, LocalDate.of(2024, 1, 1));
+
+        assertFalse(service.deleteMoment(999));
+        assertEquals(1, service.getAllMoments().size());
 }
 }
