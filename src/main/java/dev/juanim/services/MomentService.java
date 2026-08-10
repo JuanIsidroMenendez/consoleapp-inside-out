@@ -1,6 +1,7 @@
 package dev.juanim.services;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import dev.juanim.models.Emotion;
 import dev.juanim.models.Moment;
@@ -18,5 +19,9 @@ public class MomentService {
         int id = repository.generateId();
         Moment moment = new Moment(id, title, description, emotion, momentDate);
         return repository.save(moment);
+    }
+
+    public List<Moment> getAllMoments() {
+        return repository.findAll();
     }
 }
