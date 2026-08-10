@@ -1,6 +1,7 @@
 package dev.juanim.services;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,5 +39,26 @@ public class MomentService {
         }
     }
     return result;
-}
+    }
+    /*Obtener/Filtrar momentos por fecha exacta */
+    public List<Moment> getMomentsByDate(LocalDate date) {
+        List<Moment> result = new ArrayList<>();
+        for (Moment moment : repository.findAll()) {
+            if (moment.getMomentDate().equals(date)) {
+                result.add(moment);
+        }
+    }
+    return result;
+    }
+    /*Obtener/Filtrar momentos por mes y año. No incurre en redundancia porque permitirá al usuario
+    filtrar los momentos por un periodo (mes de enero, por ejemplo) */
+    public List<Moment> getMomentsByMonth(YearMonth yearMonth) {
+        List<Moment> result = new ArrayList<>();
+        for (Moment moment : repository.findAll()) {
+            if (YearMonth.from(moment.getMomentDate()).equals(yearMonth)) {
+                result.add(moment);
+            }
+            }
+    return result;
+    }
 }
