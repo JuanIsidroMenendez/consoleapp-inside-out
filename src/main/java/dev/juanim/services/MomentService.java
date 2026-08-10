@@ -1,6 +1,7 @@
 package dev.juanim.services;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import dev.juanim.models.Emotion;
@@ -27,5 +28,14 @@ public class MomentService {
 
     public boolean deleteMoment(int id) {
     return repository.deleteById(id);
+}
+    public List<Moment> getMomentsByEmotion(Emotion emotion) {
+        List<Moment> result = new ArrayList<>();
+        for (Moment moment : repository.findAll()) {
+        if (moment.getEmotion() == emotion) {
+            result.add(moment);
+        }
+    }
+    return result;
 }
 }
