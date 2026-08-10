@@ -85,5 +85,13 @@ class MomentServiceTest {
 
         assertEquals(2, joyful.size());
     }
-    
+    @Test
+    @DisplayName("Filtrar por una emoción sin coincidencias devuelve una lista vacía")
+    void filterByEmotionWithNoMatchesReturnsEmpty() {
+        service.addMoment("Feliz", "Descripción", Emotion.JOY, LocalDate.of(2024, 1, 1));
+
+        List<Moment> angry = service.getMomentsByEmotion(Emotion.ANGER);
+
+        assertEquals(0, angry.size());
+}
 }
