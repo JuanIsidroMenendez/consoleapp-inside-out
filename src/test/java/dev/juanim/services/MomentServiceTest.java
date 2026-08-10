@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -93,5 +94,47 @@ class MomentServiceTest {
         List<Moment> angry = service.getMomentsByEmotion(Emotion.ANGER);
 
         assertEquals(0, angry.size());
-}
-}
+    }
+    @Test
+    @DisplayName("Filtrar por fecha exacta devuelve solo los momentos de ese día")
+    void filterByExactDateReturnsMatchingMoments() {
+        service.addMoment("Día 1", "Descripción", Emotion.JOY, LocalDate.of(2024, 1, 1));
+        service.addMoment("Día 2", "Descripción", Emotion.JOY, LocalDate.of(2024, 1, 2));
+
+        List<Moment> result = service.getMomentsByDate(LocalDate.of(2024, 1, 1));
+
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    @DisplayName("Filtrar por una fecha sin coincidencias devuelve una lista vacía")
+    void filterByDateWithNoMatchesReturnsEmpty() {
+        service.addMoment("Día", "Descripción", Emotion.JOY, LocalDate.of(2024, 1, 1));
+
+        List<Moment> result = service.getMomentsByDate(LocalDate.of(2024, 12, 31));
+
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    @DisplayName("Filtrar por mes devuelve todos los momentos de ese mes")
+    void filterByMonthReturnsAllMomentsInMonth() {
+        service.addMoment("Enero 1", "Descripción", Emotion.JOY, LocalDate.of(2024, 1, 1));
+        service.addMoment("Enero 15", "Descripción", Emotion.JOY, LocalDate.of(2024, 1, 15));
+        service.addMoment("Febrero", "Descripción", Emotion.JOY, LocalDate.of(2024, 2, 1));
+
+        List<Moment> result = service.getMomentsByMonth(YearMonth.of(2024, 1));
+
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    @DisplayName("Filtrar por un mes sin coincidencias devuelve una lista vacía")
+    void filterByMonthWithNoMatchesReturnsEmpty() {
+        service.addMoment("Enero", "Descripción", Emotion.JOY, LocalDate.of(2024, 1, 1));
+
+        List<Moment> result = service.getMomentsByMonth(YearMonth.of(2024, 6));
+
+        assertEquals(0, result.size());
+    }
+    }
