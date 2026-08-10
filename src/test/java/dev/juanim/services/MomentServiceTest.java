@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -71,5 +72,18 @@ class MomentServiceTest {
 
         assertFalse(service.deleteMoment(999));
         assertEquals(1, service.getAllMoments().size());
-}
+    }
+
+    @Test
+    @DisplayName("Filtrar momentos por emoción devuelve solo los que coinciden")
+    void filteringByEmotionReturnsMatchingMoments() {
+        service.addMoment("Feliz 1", "Descripción", Emotion.JOY, LocalDate.of(2026, 1, 1));
+        service.addMoment("Triste", "Descripción", Emotion.SADNESS, LocalDate.of(2026, 2, 2));
+        service.addMoment("Feliz 2", "Descripción", Emotion.JOY, LocalDate.of(2026, 3, 3));
+
+        List<Moment> joyful = service.getMomentsByEmotion(Emotion.JOY);
+
+        assertEquals(2, joyful.size());
+    }
+    
 }
