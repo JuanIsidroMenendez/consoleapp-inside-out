@@ -31,6 +31,9 @@ public class ConsoleMenu {
                 case "2":
                     listMoments();
                     break;
+                case "3":
+                    deleteMoment();
+                    break;
                 case "5":
                     running = false;
                     System.out.println("¡Hasta la próxima!");
@@ -96,6 +99,18 @@ public class ConsoleMenu {
         System.out.println("Lista de momentos disponibles:");
         for (Moment moment : moments) {
                 System.out.println(format(moment));
+            }
+        }
+    /* Opción 3 */
+    private void deleteMoment() {
+        System.out.print("Introduce el ID del momento: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        boolean deleted = service.deleteMoment(id);
+        if (deleted) {
+            System.out.println("Momento vivido eliminado correctamente.");
+        } else {
+            System.out.println("No se encontró ningún momento con ese ID.");
         }
     }
 }
