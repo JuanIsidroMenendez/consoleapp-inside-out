@@ -34,6 +34,9 @@ public class ConsoleMenu {
                 case "3":
                     deleteMoment();
                     break;
+                case "4":
+                    filterMoments();
+                    break;
                 case "5":
                     running = false;
                     System.out.println("¡Hasta la próxima!");
@@ -113,6 +116,49 @@ public class ConsoleMenu {
             System.out.println("No se encontró ningún momento con ese ID.");
         }
     }
+    /* Opción 4 */
+    private void filterMoments() {
+        System.out.println("Filtrar por...:");
+        System.out.println("1. Emoción");
+        System.out.println("2. Fecha");
+        System.out.print("Introduce una opción: ");
+        String option = scanner.nextLine();
+
+        switch (option) {
+            case "1":
+                filterByEmotion();
+                break;
+            case "2":
+                filterByDate();
+                break;
+            default:
+                System.out.println("Opción no válida.");
+        }
+    }
+
+    private void filterByEmotion() {
+        Emotion emotion = askEmotion();
+        printResults(service.getMomentsByEmotion(emotion));
+    }
+
+    private void filterByDate() {
+        System.out.print("Introduce la fecha (dd/mm/yyyy): ");
+        LocalDate date = LocalDate.parse(scanner.nextLine(),
+                DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        printResults(service.getMomentsByDate(date));
+    }
+
+    private void printResults(List<Moment> moments) {
+        if (moments.isEmpty()) {
+            System.out.println("No hay momentos que coincidan.");
+            return;
+        }
+        System.out.println("Lista de momentos vividos:");
+        for (Moment moment : moments) {
+            System.out.println(format(moment));
+        }
+    }
 }
+
 
 
