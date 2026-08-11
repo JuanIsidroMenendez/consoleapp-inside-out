@@ -23,6 +23,9 @@ public class ConsoleMenu {
             showMenu();
             String option = scanner.nextLine();
             switch (option) {
+                case "1":
+                    addMoment();
+                    break;
                 case "5":
                     running = false;
                     System.out.println("¡Hasta la próxima!");
