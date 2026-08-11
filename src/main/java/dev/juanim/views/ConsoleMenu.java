@@ -3,8 +3,10 @@ package dev.juanim.views;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import java.util.List;
 
 import dev.juanim.models.Emotion;
+import dev.juanim.models.Moment;
 import dev.juanim.services.MomentService;
 
 public class ConsoleMenu {
@@ -26,6 +28,9 @@ public class ConsoleMenu {
                 case "1":
                     addMoment();
                     break;
+                case "2":
+                    listMoments();
+                    break;
                 case "5":
                     running = false;
                     System.out.println("¡Hasta la próxima!");
@@ -46,6 +51,7 @@ public class ConsoleMenu {
         System.out.println("5. Salir");
         System.out.print("Seleccione una opción: ");
     }
+    /* Opción 1*/
     private void addMoment() {
         System.out.print("Introduce el título: ");
         String title = scanner.nextLine();
@@ -73,4 +79,25 @@ public class ConsoleMenu {
         int choice = Integer.parseInt(scanner.nextLine());
         return emotions[choice - 1];
     }
+    private String format(Moment moment) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return moment.getId() + ". Ocurrió el: " + moment.getMomentDate().format(formatter)
+            + ". Título: " + moment.getTitle()
+            + ". Descripción: " + moment.getDescription()
+            + ". Emoción: " + moment.getEmotion().getDisplayName();
+    }
+    /* Opción 2*/
+    private void listMoments() {
+        List<Moment> moments = service.getAllMoments();
+        if (moments.isEmpty()) {
+            System.out.println("No hay momentos disponibles.");
+            return;
+        } 
+        System.out.println("Lista de momentos disponibles:");
+        for (Moment moment : moments) {
+                System.out.println(format(moment));
+        }
+    }
 }
+
+
