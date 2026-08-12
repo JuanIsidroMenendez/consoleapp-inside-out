@@ -2,6 +2,8 @@ package dev.juanim.views;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import java.util.Scanner;
 import java.util.List;
 
@@ -62,9 +64,7 @@ public class ConsoleMenu {
         System.out.print("Introduce el título: ");
         String title = scanner.nextLine();
 
-        System.out.print("Introduce la fecha (dd/mm/yyyy): ");
-        LocalDate momentDate = LocalDate.parse(scanner.nextLine(),
-            DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        LocalDate momentDate = readDate("Introduce la fecha (dd/mm/yyyy): ");
 
         System.out.print("Introduce la descripción: ");
         String description = scanner.nextLine();
@@ -81,9 +81,13 @@ public class ConsoleMenu {
         for (int i = 0; i < emotions.length; i++) {
             System.out.println((i + 1) + ". " + emotions[i].getDisplayName());
         }
-        System.out.print("Introduce tu opción: ");
-        int choice = Integer.parseInt(scanner.nextLine());
+        while (true) {
+        int choice = readInt("Introduce tu opción: ");
+    if (choice >= 1 && choice <= emotions.length) {
         return emotions[choice - 1];
+    }
+    System.out.println("Elige un número entre 1 y " + emotions.length + ".");
+    }
     }
     private String format(Moment moment) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -106,8 +110,7 @@ public class ConsoleMenu {
         }
     /* Opción 3 */
     private void deleteMoment() {
-        System.out.print("Introduce el ID del momento: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = readInt("Introduce el identificador del momento: ");
 
         boolean deleted = service.deleteMoment(id);
         if (deleted) {
@@ -142,9 +145,7 @@ public class ConsoleMenu {
     }
 
     private void filterByDate() {
-        System.out.print("Introduce la fecha (dd/mm/yyyy): ");
-        LocalDate date = LocalDate.parse(scanner.nextLine(),
-                DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        LocalDate date = readDate("Introduce la fecha (dd/mm/yyyy): ");
         printResults(service.getMomentsByDate(date));
     }
 
@@ -156,6 +157,26 @@ public class ConsoleMenu {
         System.out.println("Lista de momentos vividos:");
         for (Moment moment : moments) {
             System.out.println(format(moment));
+        }
+    }
+    private int readInt(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor, introduce un número válido.");
+            }
+        }
+    }
+    private LocalDate readDate(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                return LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            } catch (DateTimeParseException e) {
+                System.out.println("Haga el favor de poner una fecha válida (dd/mm/yyyy).");
+            }
         }
     }
 }
