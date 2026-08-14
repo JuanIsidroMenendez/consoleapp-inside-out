@@ -4,14 +4,14 @@ import java.time.LocalDate;
 
 import dev.juanim.models.Emotion;
 import dev.juanim.services.MomentService;
-import dev.juanim.views.ConsoleView;
+import dev.juanim.views.View;
 
 public class MomentController {
 
-    private final ConsoleView view;
+    private final View view;
     private final MomentService service;
 
-    public MomentController(ConsoleView view, MomentService service) {
+    public MomentController(View view, MomentService service) {
         this.view = view;
         this.service = service;
     }
