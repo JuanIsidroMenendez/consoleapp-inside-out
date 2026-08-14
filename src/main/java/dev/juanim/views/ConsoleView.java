@@ -10,7 +10,7 @@ import dev.juanim.models.Emotion;
 import dev.juanim.models.Moment;
 // Quito MomentService (refactorización)
 
-public class ConsoleView {
+public class ConsoleView implements View {
 
     private final Scanner scanner;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
