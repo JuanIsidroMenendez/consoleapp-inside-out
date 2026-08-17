@@ -64,4 +64,72 @@ class MomentControllerTest {
 
         assertTrue(view.messages.contains("No se encontró ningún momento con ese identificador."));
     }
+    
+    @Test
+    @DisplayName("Listar pide a la vista que muestre los momentos")
+    void listShowsMoments() {
+        view.line = "Un título";
+        view.date = LocalDate.of(2026, 8, 12);
+        view.emotion = Emotion.JOY;
+        view.options.add("1");   
+        view.options.add("2");   
+        view.options.add("5");   
+
+        controller.run();
+
+        assertEquals(1, view.shownMoments.size());
+    }
+
+    @Test
+    @DisplayName("Eliminar un momento existente lo suprime y confirma")
+    void deleteExistingRemovesAndConfirms() {
+        view.line = "Un título";
+        view.date = LocalDate.of(2026, 8, 12);
+        view.emotion = Emotion.JOY;
+        view.intValue = 1;        
+        view.options.add("1");    
+        view.options.add("3");    
+        view.options.add("5");
+
+        controller.run();
+
+        assertTrue(view.messages.contains("Momento vivido eliminado correctamente."));
+    }
+
+    @Test
+    @DisplayName("Filtrar por emoción pide a la vista que muestre los resultados")
+    void filterByEmotionShowsResults() {
+        view.emotion = Emotion.JOY;
+        view.line = "1";
+        view.options.add("4");
+        view.options.add("5");
+
+        controller.run();
+
+        assertEquals(1, view.shownMoments.size());
+    }
+
+    @Test
+    @DisplayName("Filtrar por fecha pide a la vista que muestre los resultados")
+    void filterByDateShowsResults() {
+        view.date = LocalDate.of(2024, 5, 1);
+        view.line = "2";
+        view.options.add("4");
+        view.options.add("5");
+
+        controller.run();
+
+        assertEquals(1, view.shownMoments.size());
+    }
+
+    @Test
+    @DisplayName("Una opción no válida no rompe el bucle")
+    void invalidOptionKeepsRunning() {
+        view.options.add("9");   
+        view.options.add("5");   
+
+        controller.run();
+
+        assertTrue(view.messages.contains("Opción no válida. Inténtalo de nuevo."));
+    }
 }
