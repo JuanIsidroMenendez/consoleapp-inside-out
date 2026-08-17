@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.juanim.contracts.View;
 import dev.juanim.models.Emotion;
 import dev.juanim.models.Moment;
 

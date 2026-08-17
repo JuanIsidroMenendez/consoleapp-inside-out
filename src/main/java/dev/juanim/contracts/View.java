@@ -1,4 +1,4 @@
-package dev.juanim.views;
+package dev.juanim.contracts;
 
 import java.time.LocalDate;
 import java.util.List;

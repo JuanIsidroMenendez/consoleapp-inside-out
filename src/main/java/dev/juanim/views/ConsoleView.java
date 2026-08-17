@@ -6,6 +6,7 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
+import dev.juanim.contracts.View;
 import dev.juanim.models.Emotion;
 import dev.juanim.models.Moment;
 // Quito MomentService (refactorización)

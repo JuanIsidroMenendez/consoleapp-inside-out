@@ -2,9 +2,9 @@ package dev.juanim.controllers;
 
 import java.time.LocalDate;
 
+import dev.juanim.contracts.View;
 import dev.juanim.models.Emotion;
 import dev.juanim.services.MomentService;
-import dev.juanim.views.View;
 
 public class MomentController {
 
