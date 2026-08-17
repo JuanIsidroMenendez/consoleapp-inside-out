@@ -1,0 +1,123 @@
+@startuml Diagrama de clases - Mi Diario
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+package models {
+    enum Emotion {
+        JOY
+        SADNESS
+        ANGER
+        DISGUST
+        FEAR
+        ANXIETY
+        ENVY
+        EMBARRASSMENT
+        BOREDOM
+        NOSTALGIA
+        --
+        - displayName : String
+        + getDisplayName() : String
+    }
+
+    class Moment {
+        - id : int
+        - title : String
+        - description : String
+        - emotion : Emotion
+        - momentDate : LocalDate
+        - createdAt : LocalDate
+        - modifiedAt : LocalDate
+        --
+        + getId() : int
+        + getTitle() : String
+        + getDescription() : String
+        + getEmotion() : Emotion
+        + getMomentDate() : LocalDate
+        + getCreatedAt() : LocalDate
+        + getModifiedAt() : LocalDate
+    }
+}
+
+package contracts {
+    interface MomentRepository {
+        + save(Moment) : Moment
+        + findAll() : List<Moment>
+        + deleteById(int) : boolean
+        + findById(int) : Moment
+    }
+
+    interface View {
+        + showMenu() : void
+        + readOption() : String
+        + readLine(String) : String
+        + readInt(String) : int
+        + readDate(String) : LocalDate
+        + askEmotion() : Emotion
+        + showMoments(List<Moment>) : void
+        + showMessage(String) : void
+        + close() : void
+    }
+}
+
+package repositories {
+    class InMemoryMomentRepository {
+        - moments : Map<Integer, Moment>
+        - nextId : int
+        + save(Moment) : Moment
+        + findAll() : List<Moment>
+        + deleteById(int) : boolean
+        + findById(int) : Moment
+        + generateId() : int
+    }
+}
+
+package services {
+    class MomentService {
+        - repository : InMemoryMomentRepository
+        + addMoment(String, String, Emotion, LocalDate) : Moment
+        + getAllMoments() : List<Moment>
+        + deleteMoment(int) : boolean
+        + getMomentsByEmotion(Emotion) : List<Moment>
+        + getMomentsByDate(LocalDate) : List<Moment>
+        + getMomentsByMonth(YearMonth) : List<Moment>
+    }
+}
+
+package views {
+    class ConsoleView {
+        - scanner : Scanner
+        + showMenu() : void
+        + readOption() : String
+        + readInt(String) : int
+        + readDate(String) : LocalDate
+        + askEmotion() : Emotion
+        + showMoments(List<Moment>) : void
+        + showMessage(String) : void
+    }
+}
+
+package controllers {
+    class MomentController {
+        - view : View
+        - service : MomentService
+        + run() : void
+    }
+}
+
+class Main {
+    + main(String[]) : void
+}
+
+Moment "1" *-- "1" Emotion : tiene
+InMemoryMomentRepository ..|> MomentRepository : implementa
+InMemoryMomentRepository "1" o-- "*" Moment : almacena
+MomentService --> InMemoryMomentRepository : usa
+ConsoleView ..|> View : implementa
+MomentController --> View : usa
+MomentController --> MomentService : usa
+Main --> MomentController : crea
+Main --> ConsoleView : crea
+Main --> MomentService : crea
+
+@enduml

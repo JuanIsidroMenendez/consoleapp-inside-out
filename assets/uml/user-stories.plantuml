@@ -1,0 +1,26 @@
+@startuml Diagrama de casos de uso - Mi Diario
+
+left to right direction
+
+actor Usuario
+
+rectangle "Mi Diario" {
+    usecase "Añadir un momento" as UC1
+    usecase "Ver todos los momentos" as UC2
+    usecase "Eliminar un momento" as UC3
+    usecase "Filtrar momentos" as UC4
+    usecase "Filtrar por emoción" as UC4a
+    usecase "Filtrar por fecha" as UC4b
+    usecase "Salir" as UC5
+}
+
+Usuario --> UC1
+Usuario --> UC2
+Usuario --> UC3
+Usuario --> UC4
+Usuario --> UC5
+
+UC4 ..> UC4a : <<include>>
+UC4 ..> UC4b : <<include>>
+
+@enduml

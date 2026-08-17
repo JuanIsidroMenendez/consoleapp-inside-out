@@ -1,0 +1,62 @@
+@startuml Diagrama de secuencia - Añadir un momento
+
+actor Usuario
+participant "MomentController" as Controller
+participant "ConsoleView" as View
+participant "MomentService" as Service
+participant "InMemoryMomentRepository" as Repository
+participant "Moment" as Moment
+
+Usuario -> Controller : elige opción "1"
+activate Controller
+
+Controller -> View : readLine("título")
+activate View
+View --> Controller : title
+deactivate View
+
+Controller -> View : readDate("fecha")
+activate View
+View --> Controller : momentDate
+deactivate View
+
+Controller -> View : readLine("descripción")
+activate View
+View --> Controller : description
+deactivate View
+
+Controller -> View : askEmotion()
+activate View
+View --> Controller : emotion
+deactivate View
+
+Controller -> Service : addMoment(title, description, emotion, momentDate)
+activate Service
+
+Service -> Repository : generateId()
+activate Repository
+Repository --> Service : id
+deactivate Repository
+
+Service -> Moment : new Moment(id, title, description, emotion, momentDate)
+activate Moment
+Moment --> Service : moment
+deactivate Moment
+
+Service -> Repository : save(moment)
+activate Repository
+Repository --> Service : moment
+deactivate Repository
+
+Service --> Controller : moment
+deactivate Service
+
+Controller -> View : showMessage("añadido correctamente")
+activate View
+View --> Controller : 
+deactivate View
+
+Controller --> Usuario : confirmación
+deactivate Controller
+
+@enduml
